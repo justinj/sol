@@ -14,5 +14,8 @@
   "devDependencies": {
     "claim": "^1.0.1",
     "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "alg": "^0.1.4"
   }
 }
