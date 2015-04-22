@@ -37,3 +37,17 @@ describe("orientations", function() {
     claim.same(indexing.orientation_of_index(7, 4, 3), [0, 0, 2, 1]);
   });
 });
+
+describe("zero-sum orientations", function() {
+  it("ignores the last digit when indexing", function() {
+    claim.same(indexing.index_of_zero_sum_orientation([0, 0, 0, 0], 3), 0);
+    claim.same(indexing.index_of_zero_sum_orientation([0, 2, 0, 1], 3), 6);
+    claim.same(indexing.index_of_zero_sum_orientation([0, 0, 2, 1], 3), 2);
+  });
+
+  it("infers the last digit", function() {
+    claim.same(indexing.zero_sum_orientation_of_index(0, 4, 3), [0, 0, 0, 0]);
+    claim.same(indexing.zero_sum_orientation_of_index(6, 4, 3), [0, 2, 0, 1]);
+    claim.same(indexing.zero_sum_orientation_of_index(2, 4, 3), [0, 0, 2, 1]);
+  });
+});
