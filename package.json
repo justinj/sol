@@ -1,5 +1,5 @@
 {
-  "name": "scram",
+  "name": "sol",
   "version": "0.0.1",
   "description": "Generic twisty puzzle solver",
   "main": "index.js",
