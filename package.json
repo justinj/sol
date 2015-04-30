@@ -1,7 +1,7 @@
 {
   "name": "sol",
   "version": "0.0.1",
-  "description": "Generic twisty puzzle solver",
+  "description": "The sunny generic twisty puzzle solver",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -16,7 +16,6 @@
     "mocha": "^2.2.4"
   },
   "dependencies": {
-    "alg": "^0.1.4",
     "js-schema": "^0.7.2"
   }
 }

@@ -1,22 +1,8 @@
 var Orie = require("../lib/orie");
-var assert = require("assert");
+var assert_throws_msg = require("./assert_throws_msg");
 
 // TODO: it would be nice to not have the big definition of the Orie present
 // for every test, maybe some kind of use of _.extend would be helpful.
-
-// TODO: this is almost certainly provided by assert, but I don't have internet to check :<
-var assert_throws_msg = function(msg, block) {
-  var threw = false;
-  try {
-    block();
-  } catch (e) {
-    threw = true;
-    assert.equal(e.message, msg);
-  }
-  if (!threw) {
-    assert(false, "Block\n" + block.toString() + "\ndid not throw.");
-  }
-};
 
 describe("creating normally", function() {
   it("doesn't complain creating a valid orientation", function() {
@@ -43,7 +29,6 @@ describe("creating invalid", function() {
   });
 
   it("throws an error if it has a move that doesn't have both perm and orie", function() {
-    // TODO: when have internet check how to verify the message
     assert_throws_msg("Move 'F' missing perm.", function() {
       new Orie({
         kind: Orie.kinds.ZERO_SUM,
@@ -88,7 +73,7 @@ describe("creating invalid", function() {
       });
     });
 
-    assert_throws_msg("Perm on orientation move 'F' had length 6, expected length 7.", function() {
+    assert_throws_msg("Perm move for move named 'F' had length 6, expected length 7.", function() {
       new Orie({
         kind: Orie.kinds.ZERO_SUM,
         size: 7,
