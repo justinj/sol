@@ -1,5 +1,5 @@
 var claim = require("claim");
-var indexing = require("../lib/indexing.js");
+var indexing = require("../lib/indexing");
 
 describe("permutations", function() {
   it("indexes permutations lexicographically", function() {
