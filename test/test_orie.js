@@ -1,9 +1,10 @@
 var Orie = require("../lib/orie");
 var assert = require("assert");
 
+// TODO: it would be nice to not have the big definition of the Orie present
+// for every test, maybe some kind of use of _.extend would be helpful.
 
 // TODO: this is almost certainly provided by assert, but I don't have internet to check :<
-
 var assert_throws_msg = function(msg, block) {
   var threw = false;
   try {
