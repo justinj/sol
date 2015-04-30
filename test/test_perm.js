@@ -34,4 +34,15 @@ describe("creating invalid", function() {
       });
     });
   });
+
+  it("throws an error on invalid permutations", function() {
+    assert_throws_msg("[0, 1, 2, 3, 4, 5, 5] is not a valid permutation.", function() {
+      new Perm({
+        size: 7,
+        moveEffects: {
+          "F": [0, 1, 2, 3, 4, 5, 5]
+        }
+      });
+    });
+  });
 });
