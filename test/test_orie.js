@@ -13,7 +13,7 @@ var assert_throws_msg = function(msg, block) {
     assert.equal(e.message, msg);
   }
   if (!threw) {
-    assert(false, "Block\n" + block.toString + "\ndid not throw.");
+    assert(false, "Block\n" + block.toString() + "\ndid not throw.");
   }
 };
 
@@ -97,6 +97,66 @@ describe("creating invalid", function() {
             orie: [0, 0, 1, 2, 0, 2, 1],
             perm: [0, 1, 3, 6, 4, 2]
           }
+        }
+      });
+    });
+  });
+
+  it("verifies the ories and perms of a move are valid", function() {
+    assert_throws_msg("[3, 0, 0, 0, 0, 0, 0] is not a valid orientation for an orientation with order 3.", function() {
+      new Orie({
+        kind: Orie.kinds.ZERO_SUM,
+        size: 7,
+        order: 3,
+        moveEffects: {
+          "F": {
+            orie: [3, 0, 0, 0, 0, 0, 0],
+            perm: [0, 1, 3, 6, 4, 2, 5]
+          }
+        }
+      });
+    });
+    assert_throws_msg("[0, 1, 2, 3, 4, 5, 5] is not a valid permutation.", function() {
+      new Orie({
+        kind: Orie.kinds.ZERO_SUM,
+        size: 7,
+        order: 3,
+        moveEffects: {
+          "F": {
+            orie: [0, 0, 0, 0, 0, 0, 0],
+            perm: [0, 1, 2, 3, 4, 5, 5]
+          }
+        }
+      });
+    });
+  });
+
+  it.skip("verifies that moves defined in terms of other moves bottom out eventually", function() {
+    // this is a pretty cute error msg, probs not needed right off the bat, but would be sweet
+    assert_throws_msg("Orie move definitions create a cycle: U -> F -> U.", function() {
+      new Orie({
+        kind: Orie.kinds.ZERO_SUM,
+        size: 7,
+        order: 3,
+        moveEffects: {
+          "F": "U",
+          "U": "F"
+        }
+      });
+    });
+  });
+
+
+  // a simpler alternative to the above - just don't allow stringed moves to be defined in terms of other stringed moves (currently done, but no nice error message):
+  it.skip("does not allow moves defined as algs to be defined in terms of other moves defined as algs", function() {
+    assert_throws_msg("Moves cannot be defined in terms of other moves if those moves are not explicitly defined", function() {
+      new Orie({
+        kind: Orie.kinds.ZERO_SUM,
+        size: 7,
+        order: 3,
+        moveEffects: {
+          "F": "U",
+          "U": "F"
         }
       });
     });
