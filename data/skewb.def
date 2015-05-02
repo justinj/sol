@@ -1,0 +1,55 @@
+# Skewb ksolve+ definition file (tested on v1.3 from http://mzrg.com/rubik/ksolve+/)
+#
+# Notation is in the style of Hideki Niina as defined
+ 
+here:
+# http://rubikskewb.web.fc2.com/skewb/notation.html
+#
+# Ranzha
+#
+# Centres U L F D R B
+# Corners UFL, UFR, UBR, UBL, DFL, DFR, DBR, DBL
+# Moves    F    R    B    L    f    r    b    l
+ 
+Name Skewb
+Set Corners 8 3
+Set Centres 6 1
+ 
+Solved
+Corners
+1 2 3 4 5 6 7 8
+Centres
+1 2 3 4 5 6
+End
+ 
+Move F
+Corners
+1 4 3 5 2 6 7 8
+1 2 0 2 2 0 0 0
+Centres
+2 3 1 4 5 6
+End
+ 
+Move R
+Corners
+6 2 1 4 5 3 7 8
+2 1 2 0 0 2 0 0
+Centres
+3 2 5 4 1 6
+End
+ 
+Move L
+Corners
+3 2 8 4 5 6 7 1
+2 0 2 1 0 0 0 2
+Centres
+6 1 3 4 5 2
+End
+ 
+Move B
+Corners
+1 7 3 2 5 6 4 8
+0 2 1 2 0 0 2 0
+Centres
+5 2 3 4 6 1
+End
