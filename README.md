@@ -16,3 +16,15 @@ Issues
 
 * The `axes` system is sort of broken and not powerful enough.
 It can't describe a situation where you have parallel axes which are not the same face, like in a 3x3 with `L` and `R`.
+
+Easy-ish Tasks
+==============
+
+* Validate that all components implement all the defined moves
+* Allow finding multiple solutions, up to a certain depth, and starting from a certain depth
+
+Difficult-ish Tasks
+===================
+
+* Figure out how to automatically determine how to validate states. For example, Skewb corners have a very restricted set of valid perms, but it's not clear how we could tell if a given perm is allowable.
+One option is to just check presence in the ttable... but that doesn't help if the different components depend on each other in some way
