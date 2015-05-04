@@ -20,7 +20,6 @@ It can't describe a situation where you have parallel axes which are not the sam
 Easy-ish Tasks
 ==============
 
-* Validate that all components implement all the defined moves
 * Allow finding multiple solutions, up to a certain depth, and starting from a certain depth
 
 Difficult-ish Tasks
@@ -28,3 +27,6 @@ Difficult-ish Tasks
 
 * Figure out how to automatically determine how to validate states. For example, Skewb corners have a very restricted set of valid perms, but it's not clear how we could tell if a given perm is allowable.
 One option is to just check presence in the ttable... but that doesn't help if the different components depend on each other in some way
+* Allow restricting moves in solutions
+* Related to the above, allow defining new moves in terms of others, but in a more transient way than the existing way of actually defining moves.
+This would allow reusing a def of a puzzle for other movesets (like skewb where the moves are all wonky)
