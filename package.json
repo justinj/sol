@@ -4,7 +4,7 @@
   "description": "The sunny generic twisty puzzle solver",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers js:babel/register"
   },
   "keywords": [
     "rubik"
@@ -12,6 +12,7 @@
   "author": "Justin Jaffray",
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.2.15",
     "claim": "^1.0.1",
     "mocha": "^2.2.4"
   },
