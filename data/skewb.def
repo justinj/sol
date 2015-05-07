@@ -1,8 +1,6 @@
 # Skewb ksolve+ definition file (tested on v1.3 from http://mzrg.com/rubik/ksolve+/)
 #
-# Notation is in the style of Hideki Niina as defined
- 
-here:
+# Notation is in the style of Hideki Niina as defined here:
 # http://rubikskewb.web.fc2.com/skewb/notation.html
 #
 # Ranzha
@@ -52,4 +50,36 @@ Corners
 0 2 1 2 0 0 2 0
 Centres
 5 2 3 4 6 1
+End
+ 
+Move f
+Corners
+8 2 3 4 5 1 7 6
+2 0 0 0 1 2 0 2
+Centres
+1 4 2 3 5 6
+End
+ 
+Move r
+Corners
+1 5 3 4 7 6 2 8
+0 2 0 0 2 1 2 0
+Centres
+1 2 4 5 3 6
+End
+ 
+Move l
+Corners
+1 2 3 7 4 6 5 8
+0 0 0 2 2 0 2 1
+Centres
+1 6 3 2 5 4
+End
+ 
+Move b
+Corners
+1 2 6 4 5 8 7 3
+0 0 2 0 0 2 1 2
+Centres
+1 2 3 6 4 5
 End
