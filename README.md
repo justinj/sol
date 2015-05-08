@@ -34,3 +34,41 @@ One option is to just check presence in the ttable... but that doesn't help if t
 * Allow restricting moves in solutions
 * Related to the above, allow defining new moves in terms of others, but in a more transient way than the existing way of actually defining moves.
 This would allow reusing a def of a puzzle for other movesets (like skewb where the moves are all wonky)
+
+
+Interface of a `Puzzle`
+=======================
+
+All the below is subject to change.
+
+A `Puzzle` object satisfies the following interface:
+
+##`getTransitionTables()`
+
+Method which returns a list of transition tables for the puzzle.
+A list of tables is used instead of a single table to allow for breaking a puzzle down into smaller pieces.
+
+##`getPruningTables()`
+
+Method which returns a list of pruning tables for the puzzle.
+
+##`solved`
+
+A piece of data representing the solved state of the puzzle.
+TODO: this should be an accessor?
+
+##`apply(<state-to-apply-to>, <state-being-applied>`
+
+Takes two states and applies one to the other.
+
+##`index(<state>)`
+
+Map a state to a unique natural number.
+The solved state should map to 0.
+
+This function must be injective, and ideally should be surjective onto the set `{0..<number of states>}`
+
+##`moveEffects`
+
+An object mapping moves to the states they create on a solved puzzle.
+TODO: This should maybe be replaced with a function combined with a `moves` property/accessor
