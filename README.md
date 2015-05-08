@@ -24,6 +24,7 @@ Easy-ish Tasks
 * split out the orientation that has a backingPerm and the one that doesn't into separate classes
 * make the classes use accessors (if it doesn't impact performance too much)
 * make the interface of a puzzle more concrete
+* use better logging than `console.log`
 
 Difficult-ish Tasks
 ===================
