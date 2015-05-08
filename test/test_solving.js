@@ -1,6 +1,7 @@
-// probably slow
+// this test is probably slow
+
 var puz = require("../lib/two");
-var solve = module.exports = require("../lib/solve");
+var solve = require("../lib/solve");
 var assert = require("assert");
 
 // ideal would probably just check that this solves it, but for now we can just
