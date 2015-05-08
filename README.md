@@ -25,6 +25,8 @@ Easy-ish Tasks
 * make the classes use accessors (if it doesn't impact performance too much)
 * make the interface of a puzzle more concrete
 * use better logging than `console.log`
+* There is all sorts of dependency between the order in which properties are added to puzzles during their construction.
+The functions which build things should just take the things they need instead of the puzzle itself, for example the transition tables/pruning tables)
 
 Difficult-ish Tasks
 ===================
@@ -48,9 +50,13 @@ A `Puzzle` object satisfies the following interface:
 Method which returns a list of transition tables for the puzzle.
 A list of tables is used instead of a single table to allow for breaking a puzzle down into smaller pieces.
 
+All the tables should have the same moveset (TODO: at the very least we should verify that they have the same size of moveset)
+
 ##`getPruningTables()`
 
 Method which returns a list of pruning tables for the puzzle.
+The order should correspond to the order given by `getTransitionTables()`.
+TODO: should there just be a method that returns a list of objects of ttables and ptables?
 
 ##`solved`
 
@@ -65,8 +71,9 @@ Takes two states and applies one to the other.
 
 Map a state to a unique natural number.
 The solved state should map to 0.
+(TODO: I don't really like this restriction, but I think it's currently depended on. That should be fixed)
 
-This function must be injective, and ideally should be surjective onto the set `{0..<number of states>}`
+This function must be injective, and ideally should be surjective onto the set `{0...<number of states>}`
 
 ##`moveEffects`
 
