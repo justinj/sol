@@ -9,6 +9,10 @@
   "keywords": [
     "rubik"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/justinj/sol.git"
+  },
   "author": "Justin Jaffray",
   "license": "MIT",
   "devDependencies": {
