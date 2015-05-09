@@ -26,7 +26,8 @@ Easy-ish Tasks
 * make the interface of a puzzle more concrete
 * use better logging than `console.log`
 * There is all sorts of dependency between the order in which properties are added to puzzles during their construction.
-The functions which build things should just take the things they need instead of the puzzle itself, for example the transition tables/pruning tables)
+The functions which build things should just take the things they need instead of the puzzle itself, for example the transition tables/pruning tables.
+* Use ES6 style imports instead of `require`s
 
 Difficult-ish Tasks
 ===================
