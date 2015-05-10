@@ -1,6 +1,8 @@
 import React from "react";
 import Two from "lib/two";
 import simian from "cube-simian";
+import solve from "lib/compiled/solve";
+import two from "lib/compiled/two";
 
 var colours = ["white", "orange", "green", "red", "yellow", "blue"];
 
@@ -68,9 +70,21 @@ class Cube extends React.Component {
   }
 
   render() {
-    return <svg height="410" width="310">
-      {this.state.cube.stickers().map((sticker, i) => <Sticker side={this.state.cube.colourAt(i)} index={i} />)}
-    </svg>;
+    console.log(this.state.cube.getPerm());
+    console.log(this.state.cube.getOrie());
+    var solution = solve(two, {
+      perm: this.state.cube.getPerm(),
+      orie: {
+        perm: [0, 1, 2, 3, 4, 5, 6],
+        orie: this.state.cube.getOrie()
+      }
+    });
+    return <div>
+      <svg height="410" width="310">
+        {this.state.cube.stickers().map((sticker, i) => <Sticker side={this.state.cube.colourAt(i)} index={i} />)}
+      </svg>
+      <div>{solution}</div>
+    </div>;
   }
 }
 
