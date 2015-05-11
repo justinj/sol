@@ -72,11 +72,14 @@ class Cube extends React.Component {
   render() {
     console.log(this.state.cube.getPerm());
     console.log(this.state.cube.getOrie());
-    var solution = solve(two, {
-      perm: this.state.cube.getPerm(),
-      orie: {
-        perm: [0, 1, 2, 3, 4, 5, 6],
-        orie: this.state.cube.getOrie()
+    var solution = solve({
+      puz: two,
+      state: {
+        perm: this.state.cube.getPerm(),
+        orie: {
+          perm: [0, 1, 2, 3, 4, 5, 6],
+          orie: this.state.cube.getOrie()
+        }
       }
     });
     return <div>
