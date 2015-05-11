@@ -80,13 +80,14 @@ class Cube extends React.Component {
           perm: [0, 1, 2, 3, 4, 5, 6],
           orie: this.state.cube.getOrie()
         }
-      }
+      },
+      justOne: false
     });
     return <div>
       <svg height="410" width="310">
         {this.state.cube.stickers().map((sticker, i) => <Sticker side={this.state.cube.colourAt(i)} index={i} />)}
       </svg>
-      <div>{solution}</div>
+      <div>{solution.map(s => <div>{s}</div>)}</div>
     </div>;
   }
 }
