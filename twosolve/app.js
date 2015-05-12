@@ -50,7 +50,7 @@ class Sticker extends React.Component {
   }
 }
 
-class Cube extends React.Component {
+class ControllableCube extends React.Component {
   constructor() {
     super();
     var self = this;
@@ -62,7 +62,6 @@ class Cube extends React.Component {
         });
       })
     }
-
   }
 
   componentDidUnmount() {
@@ -70,8 +69,6 @@ class Cube extends React.Component {
   }
 
   render() {
-    console.log(this.state.cube.getPerm());
-    console.log(this.state.cube.getOrie());
     var solution = solve({
       puz: two,
       state: {
@@ -84,12 +81,22 @@ class Cube extends React.Component {
       justOne: false
     });
     return <div>
-      <svg height="410" width="310">
-        {this.state.cube.stickers().map((sticker, i) => <Sticker side={this.state.cube.colourAt(i)} index={i} />)}
-      </svg>
-      <div>{solution.map(s => <div>{s}</div>)}</div>
+      <div id="solutions">
+        <Cube cube={this.state.cube} />
+        <div>{solution.map(s => <span>{s}<br /></span>)}</div>
+      </div>
     </div>;
   }
 }
 
-React.render(<Cube />, document.getElementById("mount"));
+class Cube extends React.Component {
+  render() {
+    return <div id="cube">
+      <svg height="410" width="310">
+        {this.props.cube.stickers().map((sticker, i) => <Sticker side={this.props.cube.colourAt(i)} index={i} />)}
+      </svg>
+    </div>
+  }
+}
+
+React.render(<ControllableCube />, document.getElementById("mount"));
