@@ -163,6 +163,12 @@ class Two {
     return this._state.slice();
   }
 
+  updateIndex(index, col) {
+    var cols = this.stickers();
+    cols[index] = col;
+    return new Two(cols);
+  }
+
   normalizedStickers() {
     var b = this._state[20];
     var f = opposites[b];
