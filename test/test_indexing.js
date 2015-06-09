@@ -21,6 +21,15 @@ describe("permutations", function() {
   });
 });
 
+describe("combinations", function() {
+  it("indexes combinations lexicographically", function() {
+    claim.same(indexing.index_of_comb([0, 1, 2]), 0);
+    claim.same(indexing.index_of_comb([0, 1, 1]), 0);
+    claim.same(indexing.index_of_comb([1, 0, 1]), 1);
+    claim.same(indexing.index_of_comb([1, 1, 0]), 2);
+  });
+});
+
 describe("orientations", function() {
   it("interprets an orientation with k rotations as a base-k number", function() {
     claim.same(indexing.index_of_orientation([0, 0, 0, 0], 3), 0);
