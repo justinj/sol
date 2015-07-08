@@ -106,11 +106,10 @@ var corners = {
   6: [16, 12, 11]
 };
 
-var getOrie = function(corner, state) {
-  corner = corners[corner];
-  if (isUOrD(state[corner[0]])) return 0;
-  if (isUOrD(state[corner[1]])) return 2;
-  if (isUOrD(state[corner[2]])) return 1;
+var getOrie = function(corner) {
+  if (isUOrD(corner[0])) return 0;
+  if (isUOrD(corner[1])) return 2;
+  if (isUOrD(corner[2])) return 1;
   throw new Error("PANIC!!!");
 };
 
@@ -135,15 +134,100 @@ var arrayEqual = function(a, b) {
   return true;
 };
 
-var getPerm = function(corner, state) {
+var partiallyDefined = function(corner) {
+  for (var i = 0; i < corner.length; i++) {
+    if (corner[i] === 6) {
+      return true;
+    }
+  }
+  return false;
+};
+
+var isSameCorner = function(realCorner, candidateCorner) {
+  if (partiallyDefined(candidateCorner)) {
+    return (candidateCorner[0] === candidateCorner[0] && candidateCorner[1] === candidateCorner[1])
+        || (candidateCorner[1] === candidateCorner[1] && candidateCorner[2] === candidateCorner[2])
+        || (candidateCorner[2] === candidateCorner[2] && candidateCorner[0] === candidateCorner[0]);
+  } else {
+    return arrayEqual(canonicalizeCorner(realCorner), canonicalizeCorner(candidateCorner));
+  }
+};
+
+var getIndexOfCorner = function(corner, state) {
   corner = corners[corner];
   corner = corner.map(c => state[c]);
   for (var i = 0; i < 7; i++) {
     let newCorner = corners[i].map(c => colours[c]);
-    if (arrayEqual(canonicalizeCorner(newCorner), canonicalizeCorner(corner))) {
+    if (isSameCorner(newCorner, corner)) {
       return i;
     }
   }
+  return -1;
+};
+
+var orientationKinds = {
+  0: 0,
+  1: 0,
+  2: 1,
+  3: 1,
+  4: 2,
+  5: 2
+};
+
+var allPieces = [
+  [0, 1, 2],
+  [0, 2, 3],
+  [0, 3, 5],
+  [0, 5, 1],
+  [4, 2, 1],
+  [4, 3, 2],
+  [4, 5, 3],
+  [4, 1, 5]
+];
+// This simplifies things - we include all cyclic shifts of all the allPieces
+var numPieces = allPieces.length;
+for (var i = 0; i < numPieces; i++) {
+  var newPiece = allPieces[i].slice();
+  newPiece.push(newPiece.shift());
+  allPieces.push(newPiece);
+  newPiece = newPiece.slice();
+  newPiece.push(newPiece.shift());
+  allPieces.push(newPiece);
+}
+
+var fillInCorner = function(normalized) {
+  normalized = normalized.slice();
+
+  for (var i = 0; i < allPieces.length; i++) {
+    // Dumb, but easy
+    if (allPieces[i][0] === normalized[0]
+      && allPieces[i][1] === normalized[1]) {
+        return allPieces[i];
+    }
+    if (allPieces[i][1] === normalized[1]
+      && allPieces[i][2] === normalized[2]) {
+        return allPieces[i];
+    }
+    if (allPieces[i][2] === normalized[2]
+      && allPieces[i][0] === normalized[0]) {
+        return allPieces[i];
+    }
+  }
+
+  return normalized;
+};
+
+var classifyCorner = function(corner, state) {
+  var normalized = corners[corner];
+  normalized = normalized.map(c => state[c]);
+  var index = getIndexOfCorner(corner, state);
+  normalized = fillInCorner(normalized);
+  var completedCorner = corners[index];
+  return {
+    type: Two.COMPLETE_PIECE,
+    which: index,
+    orientation: getOrie(normalized)
+  };
 };
 
 class Two {
@@ -179,7 +263,8 @@ class Two {
     var mapping = {
       [f]: 2, [b]: 5,
       [u]: 0, [d]: 4,
-      [r]: 3, [l]: 1
+      [r]: 3, [l]: 1,
+      6: 6
     };
     return this._state.map(i => mapping[i]);
   }
@@ -188,15 +273,27 @@ class Two {
     var len = Object.keys(corners).length;
     var id = [];
     for (var i = 0; i < len; i++) { id.push(i); }
-    return id.map(corner => getOrie(corner, this.normalizedStickers()));
+    return id.map(corner => {
+      var cornerPieces = corners[corner].map(i => this._state[i]);
+      getOrie(cornerPieces);
+    });
   }
 
   getPerm() {
     var len = Object.keys(corners).length;
     var id = [];
     for (var i = 0; i < len; i++) { id.push(i); }
-    return id.map(corner => getPerm(corner, this.normalizedStickers()));
+    return id.map(corner => getIndexOfCorner(corner, this.normalizedStickers()));
+  }
+
+  pieces() {
+    var len = Object.keys(corners).length;
+    var id = [];
+    for (var i = 0; i < len; i++) { id.push(i); }
+    return id.map(corner => classifyCorner(corner, this.normalizedStickers()));
   }
 }
+
+Two.COMPLETE_PIECE = "complete_piece";
 
 export default Two;

@@ -2,7 +2,7 @@ import React from "react";
 import ControllableCube from "src/cube";
 import Palette from "src/palette";
 import getColours from "src/getColours";
-import Two from "lib/two";
+import Two from "src/two";
 import solve from "lib/compiled/solve";
 import two from "lib/compiled/two";
 
