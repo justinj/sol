@@ -36,6 +36,15 @@ describe("combinations", function() {
     claim.same(combToIndex([1, 0, 1]), 1);
     claim.same(combToIndex([1, 1, 0]), 2);
   });
+
+  it("behaves the same as a permToIndex when given a permutation", function() {
+    claim.same(combToIndex([0, 1, 2]), 0);
+    claim.same(combToIndex([0, 2, 1]), 1);
+    claim.same(combToIndex([1, 0, 2]), 2);
+    claim.same(combToIndex([1, 2, 0]), 3);
+    claim.same(combToIndex([2, 0, 1]), 4);
+    claim.same(combToIndex([2, 1, 0]), 5);
+  });
 });
 
 describe("orientations", function() {
