@@ -231,7 +231,6 @@ var classifyCorner = function(corner, state) {
   normalized = normalized.map(c => state[c]);
   var index = getIndexOfCorner(corner, state);
   normalized = fillInCorner(normalized);
-  var completedCorner = CORNERS[index];
   return {
     type: Two.COMPLETE_PIECE,
     which: index,
