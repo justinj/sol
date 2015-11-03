@@ -1,6 +1,5 @@
 {
   "jspm": {
-    "directories": {},
     "dependencies": {
       "cube-simian": "npm:cube-simian@^0.0.3",
       "js-schema": "npm:js-schema@^1.0.1",

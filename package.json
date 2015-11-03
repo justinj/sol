@@ -4,7 +4,7 @@
   "description": "The sunny generic twisty puzzle solver",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register",
+    "test": "mocha --compilers js:babel-core/register",
     "compile-for-twosolve": "babel lib -d twosolve/lib/compiled"
   },
   "keywords": [
@@ -17,12 +17,14 @@
   "author": "Justin Jaffray",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.2.15",
+    "babel-core": "^6.0.20",
+    "babel-preset-es2015": "^6.0.15",
     "claim": "^1.0.1",
     "mocha": "^2.2.4"
   },
   "dependencies": {
     "benchmark": "^1.0.0",
-    "js-schema": "^0.7.2"
+    "js-schema": "^0.7.2",
+    "lodash": "^3.10.1"
   }
 }

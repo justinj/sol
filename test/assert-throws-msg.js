@@ -1,7 +1,7 @@
-var assert = require("assert");
+import assert from 'assert';
 
 // TODO: this is almost certainly provided by assert, but I don't have internet to check :<
-module.exports = function(msg, block) {
+export default function(msg, block) {
   var threw = false;
   try {
     block();

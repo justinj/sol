@@ -1,5 +1,5 @@
-var Perm = require("../lib/perm");
-var assert_throws_msg = require("./assert_throws_msg");
+import Perm from '../lib/perm';
+import assertThrowsMsg from './assert-throws-msg';
 
 describe("creating normally", function() {
   it("doesn't complain creating a valid permutation", function() {
@@ -16,7 +16,7 @@ describe("creating normally", function() {
 
 describe("creating invalid", function() {
   it("throws an error if you create a perm missing a required field", function() {
-    assert_throws_msg("{\"size\":\"undefined is not Number\"}", function() {
+    assertThrowsMsg("{\"size\":\"undefined is not Number\"}", function() {
       new Perm({
         // size: 7,
         moveEffects: {}
@@ -25,7 +25,7 @@ describe("creating invalid", function() {
   });
 
   it("throws an error if it has a move whose perm is the wrong length", function() {
-    assert_throws_msg("Perm move for move named 'F' had length 6, expected length 7.", function() {
+    assertThrowsMsg("Perm move for move named 'F' had length 6, expected length 7.", function() {
       new Perm({
         size: 7,
         moveEffects: {
@@ -36,7 +36,7 @@ describe("creating invalid", function() {
   });
 
   it("throws an error on invalid permutations", function() {
-    assert_throws_msg("[0, 1, 2, 3, 4, 5, 5] is not a valid permutation.", function() {
+    assertThrowsMsg("[0, 1, 2, 3, 4, 5, 5] is not a valid permutation.", function() {
       new Perm({
         size: 7,
         moveEffects: {
