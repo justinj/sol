@@ -31,4 +31,14 @@ describe("solving", function() {
                    justOne: false,
                  }));
   });
+
+  it("can stop searching at a certain depth, and returns []", function() {
+    assert.deepEqual([],
+                 solve({
+                   puz: twoByTwo, 
+                   state: stateOfAlg(twoByTwo, "R2 U2 R2"),
+                   justOne: false,
+                   maxDepth: 2,
+                 }));
+  });
 });
