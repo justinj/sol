@@ -5,6 +5,8 @@ import skewb from '../lib/skewb';
 import solve from '../lib/solve';
 import assert from 'assert';
 import stateOfAlg from '../lib/state-of-alg';
+import Perm from '../lib/perm';
+import Puz from '../lib/puz';
 
 // ideal would probably just check that this solves it, but for now we can just
 // check the exact solution
@@ -52,3 +54,37 @@ describe("solving", function() {
                  }));
   });
 });
+
+describe("solving with multiple solved states", function() {
+  it('solves a state that has multiple solved states defined', function() {
+    let perm = new Perm({
+      size: 3,
+      moveEffects: {
+        "A": [2, 0, 1],
+        "A'": "A A",
+      },
+      isSolved: function(state) {
+        return state[0] === 1 || state[0] === 0;
+      }
+    });
+
+    let puz = new Puz({
+      components: {
+        a: perm,
+      },
+      axes: [
+        ["A", "A'"],
+      ],
+    });
+
+    assert.deepEqual(
+      ["A", "A'"],
+      solve({
+        puz: puz,
+        state: stateOfAlg(puz, "A"),
+        justOne: false,
+      })
+    );
+  });
+});
+

@@ -32,6 +32,10 @@ The functions which build things should just take the things they need instead o
 Difficult-ish Tasks
 ===================
 
+* In order to get the speed *and* generality we want, we might need to do some macro stuff.
+  For example, we want to be able to define arbitrary solved states, but in the more common case of a *single* solved state, we don't want to be checking every iteration if we have a solved *function*.
+  We also might want to avoid function calls (thought this should be benchmarked) and prefer inlining. These two goals are sort of contradictory.
+* `Perm`s and `Orie`s should be puzzles.
 * specify legal moves for `solve`
 * Figure out how to automatically determine how to validate states. For example, Skewb corners have a very restricted set of valid perms, but it's not clear how we could tell if a given perm is allowable.
 One option is to just check presence in the ttable... but that doesn't help if the different components depend on each other in some way
@@ -66,7 +70,7 @@ TODO: should there just be a method that returns a list of objects of ttables an
 A piece of data representing the solved state of the puzzle.
 TODO: this should be an accessor?
 
-##`apply(<state-to-apply-to>, <state-being-applied>`
+##`apply(<state-to-apply-to>, <state-being-applied>)`
 
 Takes two states and applies one to the other.
 
