@@ -72,7 +72,7 @@ class ControllableCube extends React.Component {
   }
 
   componentDidUnmount() {
-    document.removeEventListener(this.state.keypressListener);
+    document.removeEventListener("keypress", this.state.keypressListener);
   }
 
   render() {
