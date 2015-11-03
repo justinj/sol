@@ -37,6 +37,7 @@ One option is to just check presence in the ttable... but that doesn't help if t
 * Allow restricting moves in solutions
 * Related to the above, allow defining new moves in terms of others, but in a more transient way than the existing way of actually defining moves.
 This would allow reusing a def of a puzzle for other movesets (like skewb where the moves are all wonky)
+* More puzzles, like pyra, maybe 5x5 l2c?
 
 
 Interface of a `Puzzle`
