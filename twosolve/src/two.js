@@ -96,7 +96,7 @@ moveDefs.forEach(function(def) {
   moveEffects[move + "'"] = cube;
 });
 
-var corners = {
+var CORNERS = {
   0: [0, 22, 4],
   1: [1, 9, 23],
   2: [3, 7, 8],
@@ -145,24 +145,33 @@ var partiallyDefined = function(corner) {
 
 var isSameCorner = function(realCorner, candidateCorner) {
   if (partiallyDefined(candidateCorner)) {
-    return (candidateCorner[0] === candidateCorner[0] && candidateCorner[1] === candidateCorner[1])
-        || (candidateCorner[1] === candidateCorner[1] && candidateCorner[2] === candidateCorner[2])
-        || (candidateCorner[2] === candidateCorner[2] && candidateCorner[0] === candidateCorner[0]);
+    let amountSame = 0;
+    for (var offset = 0; offset < 3; offset++) {
+      for (var i = 0; i < 3; i++) {
+        if (candidateCorner[(i + offset) % 3] === realCorner[i]) {
+          amountSame += 1;
+        }
+      }
+      if (amountSame >= 2) {
+        return true
+      }
+    }
+    return false;
   } else {
     return arrayEqual(canonicalizeCorner(realCorner), canonicalizeCorner(candidateCorner));
   }
 };
 
 var getIndexOfCorner = function(corner, state) {
-  corner = corners[corner];
+  corner = CORNERS[corner];
   corner = corner.map(c => state[c]);
   for (var i = 0; i < 7; i++) {
-    let newCorner = corners[i].map(c => colours[c]);
+    let newCorner = CORNERS[i].map(c => colours[c]);
     if (isSameCorner(newCorner, corner)) {
       return i;
     }
   }
-  return -1;
+  throw new Error("panic...?");
 };
 
 var orientationKinds = {
@@ -218,11 +227,11 @@ var fillInCorner = function(normalized) {
 };
 
 var classifyCorner = function(corner, state) {
-  var normalized = corners[corner];
+  var normalized = CORNERS[corner];
   normalized = normalized.map(c => state[c]);
   var index = getIndexOfCorner(corner, state);
   normalized = fillInCorner(normalized);
-  var completedCorner = corners[index];
+  var completedCorner = CORNERS[index];
   return {
     type: Two.COMPLETE_PIECE,
     which: index,
@@ -270,24 +279,15 @@ class Two {
   }
 
   getOrie() {
-    var len = Object.keys(corners).length;
-    var id = [];
-    for (var i = 0; i < len; i++) { id.push(i); }
-    return id.map(corner => {
-      var cornerPieces = corners[corner].map(i => this._state[i]);
-      getOrie(cornerPieces);
-    });
+    return this.pieces().map(piece => piece.orientation);
   }
 
   getPerm() {
-    var len = Object.keys(corners).length;
-    var id = [];
-    for (var i = 0; i < len; i++) { id.push(i); }
-    return id.map(corner => getIndexOfCorner(corner, this.normalizedStickers()));
+    return this.pieces().map(piece => piece.which);
   }
 
   pieces() {
-    var len = Object.keys(corners).length;
+    var len = Object.keys(CORNERS).length;
     var id = [];
     for (var i = 0; i < len; i++) { id.push(i); }
     return id.map(corner => classifyCorner(corner, this.normalizedStickers()));

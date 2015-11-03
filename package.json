@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
-    "compile-for-twosolve": "babel lib -d twosolve/lib/compiled"
+    "compile-for-twosolve": "babel lib -d twosolve/lib/compiled",
+    "unscientific-bench": "time babel-node bench/solve_2x2.js"
   },
   "keywords": [
     "rubik"

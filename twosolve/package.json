@@ -1,6 +1,7 @@
 {
   "jspm": {
     "dependencies": {
+      "babel": "npm:babel-core@^6.0.20",
       "cube-simian": "npm:cube-simian@^0.0.3",
       "js-schema": "npm:js-schema@^1.0.1",
       "react": "npm:react@^0.13.3",
@@ -14,5 +15,11 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel/register"
+  },
+  "devDependencies": {
+    "babel": "^6.0.15",
+    "babel-core": "^6.0.20",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-2": "^6.0.15"
   }
 }
