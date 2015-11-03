@@ -1,5 +1,5 @@
 {
-  "name": "sol",
+  "name": "rubik-sol",
   "version": "0.0.1",
   "description": "The sunny generic twisty puzzle solver",
   "main": "index.js",
