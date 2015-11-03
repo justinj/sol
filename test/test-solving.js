@@ -1,6 +1,6 @@
 // this test is probably slow
 
-import puz from '../lib/two';
+import twoByTwo from '../lib/two';
 import solve from '../lib/solve';
 import assert from 'assert';
 import stateOfAlg from '../lib/state-of-alg';
@@ -12,7 +12,7 @@ describe("solving", function() {
   it("solves a state", function() {
     assert.deepEqual(["F U F' R F2 U R' U' R' F2 R'"],
                  solve({
-                   puz, 
+                   puz: twoByTwo, 
                    state: {
                      perm: [0, 2, 1, 3, 4, 5, 6],
                      orie: {
@@ -26,8 +26,8 @@ describe("solving", function() {
   it("solves a state in multiple ways", function() {
     assert.deepEqual(["R2 U2 R2", "U2 R2 U2"],
                  solve({
-                   puz, 
-                   state: stateOfAlg(puz, "R2 U2 R2"),
+                   puz: twoByTwo, 
+                   state: stateOfAlg(twoByTwo, "R2 U2 R2"),
                    justOne: false,
                  }));
   });
