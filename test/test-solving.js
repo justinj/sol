@@ -1,8 +1,8 @@
 // this test is probably slow
 
-var puz = require("../lib/two");
-var solve = require("../lib/solve");
-var assert = require("assert");
+import puz from '../lib/two';
+import solve from '../lib/solve';
+import assert from 'assert';
 
 // ideal would probably just check that this solves it, but for now we can just
 // check the exact solution
