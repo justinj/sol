@@ -10,7 +10,7 @@ import stateOfAlg from '../lib/state-of-alg';
 
 describe("solving", function() {
   it("solves a state", function() {
-    assert.equal("F U F' R F2 U R' U' R' F2 R'",
+    assert.deepEqual(["F U F' R F2 U R' U' R' F2 R'"],
                  solve({
                    puz, 
                    state: {
