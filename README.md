@@ -32,6 +32,7 @@ The functions which build things should just take the things they need instead o
 Difficult-ish Tasks
 ===================
 
+* specify legal moves for `solve`
 * Figure out how to automatically determine how to validate states. For example, Skewb corners have a very restricted set of valid perms, but it's not clear how we could tell if a given perm is allowable.
 One option is to just check presence in the ttable... but that doesn't help if the different components depend on each other in some way
 * Allow restricting moves in solutions
