@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "benchmark": "^1.0.0",
-    "js-schema": "^0.7.2"
+    "js-schema": "^0.7.2",
+    "lodash": "^3.10.1"
   }
 }
