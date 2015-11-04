@@ -1,5 +1,6 @@
 import Perm from '../lib/perm';
 import assertThrowsMsg from './assert-throws-msg';
+import claim from 'claim';
 
 describe("creating normally", function() {
   it("doesn't complain creating a valid permutation", function() {
@@ -7,6 +8,21 @@ describe("creating normally", function() {
       size: 7,
       moveEffects: {}
     });
+  });
+
+  it("creates a transition table", function() {
+    let p = new Perm({
+      size: 3,
+      moveEffects: {
+        "A": [1, 0, 2],
+        "B": [0, 2, 1],
+      }
+    });
+
+    claim.same(
+      p.getTransitionTables(),
+      [[[2, 1], [4, 0], [0, 3], [5, 2], [1, 5], [3, 4]]]
+    );
   });
 });
 
