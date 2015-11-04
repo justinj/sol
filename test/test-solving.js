@@ -1,6 +1,7 @@
 // this test is probably slow
 
 import twoByTwo from '../lib/two';
+import skewb from '../lib/skewb';
 import solve from '../lib/solve';
 import assert from 'assert';
 import stateOfAlg from '../lib/state-of-alg';
@@ -9,7 +10,7 @@ import stateOfAlg from '../lib/state-of-alg';
 // check the exact solution
 
 describe("solving", function() {
-  it("solves a state", function() {
+  it("solves a 2x2 state", function() {
     assert.deepEqual(["F U F' R F2 U R' U' R' F2 R'"],
                  solve({
                    puz: twoByTwo, 
@@ -21,6 +22,15 @@ describe("solving", function() {
                      }
                    },
                  }));
+  });
+
+  it("solves a skewb state", function() {
+    assert.deepEqual(
+      ["L' B' R' U'"],
+      solve({
+        puz: skewb, 
+        state: stateOfAlg(skewb, "U R B L"),
+      }));
   });
 
   it("solves a state in multiple ways", function() {
