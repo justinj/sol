@@ -15,7 +15,7 @@ describe('FlexiblePerm', function() {
     }
   });
 
-  it('generates a transition table idential to Perm', function() {
+  it('generates a transition table identical to Perm', function() {
     claim.same(
       fp.getTransitionTables(),
       [[[2, 1], [4, 0], [0, 3], [5, 2], [1, 5], [3, 4]]]
