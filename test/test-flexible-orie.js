@@ -101,19 +101,6 @@ describe('FlexibleOrie', function() {
     },
   });
 
-  describe.skip('indexing', function() {
-    let x = { type: 0, orientation: 0 };
-    let y = { type: 1, orientation: 0 };
-    let z = { type: 0, orientation: 1 };
-
-    // Basically, every state of the permutation side should result in solved. I think all that means is that our pruning table should be filled with 0's for it.
-    it('creates indexArrays', function() {
-      claim.same(fo.createIndexArray([x, y]), [0, 0]);
-      claim.same(fo.createIndexArray([z, y]), [1, 0]);
-      claim.same(fo.createIndexArray([y, x]), [0, 1]);
-    });
-  });
-
   it('is solvable', function() {
     let state = [{
       type: 1,
