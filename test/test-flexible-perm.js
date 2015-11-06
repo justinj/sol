@@ -28,4 +28,14 @@ describe('FlexiblePerm', function() {
       [[0, 1, 0, 1, 2, 2]]
     );
   });
+
+  // TODO: it would be nice to standardize the set of properties that we want
+  // to test on a component.
+  describe('indexing', function() {
+    it('creates indexArrays', function() {
+      claim.same(fp.createIndexArray([0, 1, 2]), [0]);
+      claim.same(fp.createIndexArray([0, 2, 1]), [1]);
+      claim.same(fp.createIndexArray([1, 0, 2]), [2]);
+    });
+  });
 });
