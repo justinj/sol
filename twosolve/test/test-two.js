@@ -1,6 +1,7 @@
 // just a sketch
 import assert from 'assert';
 import Two from '../src/two';
+import { COMPLETE_PIECE, PARTIALLY_DEFINED } from '../src/piece-types';
 
 describe("two", function() {
   it("identifies the kinds of pieces", function() {
