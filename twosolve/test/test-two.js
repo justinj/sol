@@ -36,9 +36,9 @@ describe("two", function() {
       type: Two.PARTIALLY_DEFINED,
       sticker: 0,
       orientation: 0,
+      which: [0, 1, 2, 3],
     });
 
-    // need a way to figure out what the orientation of a piece is based on the sticker type :<
     var two = new Two([
               6,  0,
               0,  0,
@@ -53,6 +53,41 @@ describe("two", function() {
       type: Two.PARTIALLY_DEFINED,
       sticker: 0,
       orientation: 1,
+      which: [0, 1, 2, 3],
+    });
+
+    var two = new Two([
+              6,  0,
+              0,  0,
+      1,  1,  2,  2,  3,  3,
+      1,  1,  2,  2,  3,  3,
+              4,  4,
+              4,  4,
+              5,  5,
+              6,  5]);
+    var pieces = two.pieces();
+    assert.deepEqual(pieces[0], {
+      type: Two.PARTIALLY_DEFINED,
+      sticker: 1,
+      orientation: 0,
+      which: [0, 3, 6],
+    });
+
+    var two = new Two([
+              1,  0,
+              0,  0,
+      6,  1,  2,  2,  3,  3,
+      1,  1,  2,  2,  3,  3,
+              4,  4,
+              4,  4,
+              5,  5,
+              6,  5]);
+    var pieces = two.pieces();
+    assert.deepEqual(pieces[0], {
+      type: Two.PARTIALLY_DEFINED,
+      sticker: 1,
+      orientation: 2,
+      which: [0, 3, 6]
     });
   });
 

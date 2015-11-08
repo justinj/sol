@@ -19,6 +19,10 @@ var colours = [
            5,  5,
            5,  5];
 
+let UD = 0;
+let FB = 1;
+let LR = 2;
+
 var isUOrD = x => x === 0 || x === 4;
 
 var opposites = {
@@ -175,12 +179,12 @@ var getIndexOfCorner = function(corner, state) {
 };
 
 var orientationKinds = {
-  0: 0,
-  1: 0,
-  2: 1,
-  3: 1,
-  4: 2,
-  5: 2
+  0: UD,
+  1: LR,
+  2: FB,
+  3: LR,
+  4: UD,
+  5: FB
 };
 
 var allPieces = [
@@ -242,6 +246,19 @@ let positionsForSingleStickers = {
   5: [0, 1, 4],
 };
 
+// We need this because listing the corners in ccw order means
+// we need extra info to determine the orientation of a piece
+// (this doesn't have much variation though, they make a checker pattern)
+let orientationTypeOrder = {
+  0: [UD, LR, FB],
+  1: [UD, FB, LR],
+  2: [UD, LR, FB],
+  3: [UD, FB, LR],
+  4: [UD, LR, FB],
+  5: [UD, FB, LR],
+  6: [UD, LR, FB],
+};
+
 var classifyCorner = function(corner, state) {
   var normalized = CORNERS[corner];
   normalized = normalized.map(c => state[c]);
@@ -256,15 +273,26 @@ var classifyCorner = function(corner, state) {
     };
   } else if (stickerCount === 1) {
     let sticker;
+    let stickerPosn;
     for (let i = 0; i < normalized.length; i++) {
       if (normalized[i] !== 6) {
         sticker = normalized[i];
+        stickerPosn = i;
       }
     }
+
+    // ugh, this is because we want orientation in cw, but we store stickers in ccw. fix this.
+    if (stickerPosn === 2) stickerPosn = 1;
+    else if (stickerPosn === 1) stickerPosn = 2;
+
+    let relevantOrientations = orientationTypeOrder[corner];
+    let orientationType = orientationKinds[sticker];
+    let orientationIndex = relevantOrientations.indexOf(orientationType);
     return {
       type: Two.PARTIALLY_DEFINED,
-      sticker: orientationKinds[sticker],
-      orientation: 0,
+      sticker: sticker,
+      orientation: (stickerPosn - orientationIndex + 3) % 3,
+      which: positionsForSingleStickers[sticker],
     };
   }
 };
