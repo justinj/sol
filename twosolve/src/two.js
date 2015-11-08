@@ -193,6 +193,7 @@ var allPieces = [
   [4, 5, 3],
   [4, 1, 5]
 ];
+
 // This simplifies things - we include all cyclic shifts of all the allPieces
 var numPieces = allPieces.length;
 for (var i = 0; i < numPieces; i++) {
@@ -226,17 +227,48 @@ var fillInCorner = function(normalized) {
   return normalized;
 };
 
+var numberOfStickers = function(piece) {
+  let count = 0;
+  piece.forEach(sticker => count += sticker === 6 ? 0 : 1);
+  return count;
+}
+
+let positionsForSingleStickers = {
+  0: [0, 1, 2, 3],
+  1: [0, 3, 6],
+  2: [2, 3, 5, 6],
+  3: [1, 2, 4, 5],
+  4: [4, 5, 6],
+  5: [0, 1, 4],
+};
+
 var classifyCorner = function(corner, state) {
   var normalized = CORNERS[corner];
   normalized = normalized.map(c => state[c]);
-  var index = getIndexOfCorner(corner, state);
-  normalized = fillInCorner(normalized);
-  return {
-    type: Two.COMPLETE_PIECE,
-    which: index,
-    orientation: getOrie(normalized)
-  };
+  let stickerCount = numberOfStickers(normalized);
+  if (stickerCount >= 2) {
+    let index = getIndexOfCorner(corner, state);
+    normalized = fillInCorner(normalized);
+    return {
+      type: Two.COMPLETE_PIECE,
+      which: [index],
+      orientation: getOrie(normalized)
+    };
+  } else if (stickerCount === 1) {
+    let sticker;
+    for (let i = 0; i < normalized.length; i++) {
+      if (normalized[i] !== 6) {
+        sticker = normalized[i];
+      }
+    }
+    return {
+      type: Two.PARTIALLY_DEFINED,
+      sticker: orientationKinds[sticker],
+      orientation: 0,
+    };
+  }
 };
+
 
 class Two {
   constructor(state = colours) {
@@ -294,5 +326,6 @@ class Two {
 }
 
 Two.COMPLETE_PIECE = "complete_piece";
+Two.PARTIALLY_DEFINED = "partially_defined";
 
 export default Two;

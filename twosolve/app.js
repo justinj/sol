@@ -17,18 +17,22 @@ class Ui extends React.Component {
 
   render() {
     console.log(this.state.cubeState.getPerm());
-    var solution = solve({
-      puz: two,
-      state: {
-        perm: this.state.cubeState.getPerm(),
-        orie: {
-          perm: [0, 1, 2, 3, 4, 5, 6],
-          orie: this.state.cubeState.getOrie()
-        }
-      },
-      justOne: false
-    });
+    // var solution = solve({
+    //   puz: two,
+    //   state: {
+    //     perm: this.state.cubeState.getPerm(),
+    //     orie: {
+    //       perm: [0, 1, 2, 3, 4, 5, 6],
+    //       orie: this.state.cubeState.getOrie()
+    //     }
+    //   },
+    //   justOne: false
+    // });
+    // <div id="solutions">
+    //   <div>{solution.map(s => <span>{s}<br /></span>)}</div>
+    // </div>
 
+    console.log(this.state.cubeState.pieces());
     return <div>
       <ControllableCube
         cubeState={this.state.cubeState}
@@ -39,9 +43,6 @@ class Ui extends React.Component {
         selectedColour={this.state.selectedColour}
         onChangeColour={this.handleChangeColour.bind(this)}
       />
-      <div id="solutions">
-        <div>{solution.map(s => <span>{s}<br /></span>)}</div>
-      </div>
     </div>;
   }
 
