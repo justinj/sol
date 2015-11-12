@@ -3,6 +3,7 @@ import FlexibleOrie from '../lib/flexible-orie';
 
 import Puzzle from '../lib/puz';
 import solve from '../lib/solve';
+import stateOfAlg from '../lib/state-of-alg';
 
 describe('FlexibleOrie', function() {
   // This puzzle has two pieces and two moves
@@ -61,29 +62,20 @@ describe('FlexibleOrie', function() {
 
   });
 
-  let solvedState = [{
-    type: 0,
-    orientation: 0,
-    index: 0,
-  }, {
-    type: 1,
-    orientation: 0,
-    index: 1,
-  }];
+  let solvedState = fo.solved;
 
   it('applies moves', function() {
     let apply = fo.apply;
     let result = apply(solvedState, A);
     claim.same(
-      result, [{
-        type: 1,
-        orientation: 0,
-        index: 1,
-      }, {
-        type: 0,
-        orientation: 1,
-        index: 0,
-      }],
+      result,
+      {
+        perm: [1, 0],
+        orientations: {
+          '0': [0, 1], // if I am a 0, do this to me
+          '1': [0, 0], // resp. 1
+        }
+      }
     );
   });
 
@@ -102,20 +94,10 @@ describe('FlexibleOrie', function() {
   });
 
   it('is solvable', function() {
-    let state = [{
-      type: 1,
-      orientation: 0,
-      index: 1,
-    }, {
-      type: 0,
-      orientation: 2,
-      index: 0,
-    }];
+    let state = stateOfAlg(puz, "B' A'");
     let result = solve({
       puz,
-      state: {
-        flexibleOrie: state
-      },
+      state,
     });
     claim.same(result, ["A B"]);
   });
