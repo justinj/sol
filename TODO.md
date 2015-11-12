@@ -7,6 +7,7 @@ It can't describe a situation where you have parallel axes which are not the sam
 Easy-ish Tasks
 ==============
 
+* Kill `buildList`, or at least its helpers
 * Allow finding multiple solutions, up to a certain depth, and starting from a certain depth
 * split out the orientation that has a backingPerm and the one that doesn't into separate classes
 * make the classes use accessors (if it doesn't impact performance too much)
@@ -19,6 +20,8 @@ The functions which build things should just take the things they need instead o
 Difficult-ish Tasks
 ===================
 
+* reuse arrays when solving?
+* figure out if moveEffects is part of a puzzle's external interface
 * Verify that every move given has an inverse (requirement for transition tables to make sense)
 * In order to get the speed *and* generality we want, we might need to do some macro stuff.
   For example, we want to be able to define arbitrary solved states, but in the more common case of a *single* solved state, we don't want to be checking every iteration if we have a solved *function*.
@@ -35,4 +38,6 @@ This would allow reusing a def of a puzzle for other movesets (like skewb where 
 Other
 =====
 
+* test the initialState stuff
+* In some contexts, `solved` should be `identity`
 * We need to remove `index` as part of a component's external interface.
