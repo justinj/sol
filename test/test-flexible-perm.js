@@ -29,6 +29,29 @@ describe('FlexiblePerm', function() {
     );
   });
 
+  describe('given an initial state that is not solved', function() {
+    let fp = new FlexiblePerm({
+      pieces: [
+        [0, 1],
+        [2],
+        [0, 1],
+      ],
+      // in this little puzzle, A swaps the first two, B swaps the second two
+      moveEffects: {
+        "A": [1, 0, 2],
+        "B": [0, 2, 1],
+      }
+    });
+
+    it('generates a pruning table', function() {
+      claim.same(
+        fp.getPruningTables(),
+        [[1, 0, 2, 2, 0, 1]]
+      );
+    });
+
+  });
+
   // TODO: it would be nice to standardize the set of properties that we want
   // to test on a component.
   describe('indexing', function() {
