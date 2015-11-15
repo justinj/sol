@@ -3,6 +3,7 @@ import {
   permToIndex,
   indexToPerm,
   combToIndex,
+  repeatedPermToIndex,
   orientationToIndex,
   indexToOrientation,
   zeroSumOrientationToIndex,
@@ -29,18 +30,38 @@ describe("permutations", function() {
   });
 });
 
-describe("combinations", function() {
-  it("indexes combinations lexicographically", function() {
-    claim.same(combToIndex([0, 1, 2]), 0);
-    claim.same(combToIndex([0, 1, 1]), 0);
-    claim.same(combToIndex([1, 0, 1]), 1);
-    claim.same(combToIndex([1, 1, 0]), 2);
+describe('combinations', function() {
+  it('indexes combinations with one element', function() {
+    claim.same(combToIndex([true, false, false, false]), 0);
+    claim.same(combToIndex([false, true, false, false]), 1);
+    claim.same(combToIndex([false, false, true, false]), 2);
+    claim.same(combToIndex([false, false, false, true]), 3);
   });
 
-  it.skip("maps permutations distinctly", function() {
+  it('indexes combinations with two elements', function() {
+    claim.same(combToIndex([true, true, false, false]), 0);
+    claim.same(combToIndex([true, false, true, false]), 1);
+    claim.same(combToIndex([true, false, false, true]), 2);
+    claim.same(combToIndex([false, true, true, false]), 3);
+    claim.same(combToIndex([false, true, false, true]), 4);
+    claim.same(combToIndex([false, false, true, true]), 5);
+  });
+});
+
+describe("permutations with repititions", function() {
+  it("indexes them lexicographically", function() {
+    claim.same(repeatedPermToIndex([0, 1, 2]), 0);
+    claim.same(repeatedPermToIndex([0, 2, 1]), 1);
+
+    claim.same(repeatedPermToIndex([0, 1, 1]), 0);
+    claim.same(repeatedPermToIndex([1, 0, 1]), 1);
+    claim.same(repeatedPermToIndex([1, 1, 0]), 2);
+  });
+
+  it("maps permutations distinctly", function() {
     let seen = {};
     [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]].forEach((perm) => {
-      let result = combToIndex(perm);
+      let result = repeatedPermToIndex(perm);
       if (seen[result]) {
         claim.fail(`${seen[result]} and ${perm} map to the same thing!`);
       }
