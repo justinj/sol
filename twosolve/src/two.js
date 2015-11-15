@@ -1,5 +1,9 @@
 import classifyCorner from './classify-corner';
+import Puz from '../lib/compiled/puz';
+import FlexiblePerm from '../lib/compiled/flexible-perm';
+import FlexibleOrie from '../lib/compiled/flexible-orie';
 // TODO: would be sweet to generalize a bunch of the stuff that got ripped from cubid
+// TODO: don't allow rotations maybe
 var solved = [
            0,  1,
            2,  3,
@@ -61,6 +65,59 @@ var moveDefs = [
    ["B" , "y2 F y2"]
 ];
 
+let F = {
+  perm: [0, 1, 3, 6, 4, 2, 5],
+  orientations: {
+    0: [0, 0, 1, 2, 0, 2, 1],
+    1: [0, 0, 0, 0, 0, 0, 0],
+    2: [0, 0, 2, 1, 0, 1, 2],
+    3: [0, 0, 0, 0, 0, 0, 0],
+  }
+}
+
+let R = {
+  perm: [0, 2, 5, 3, 1, 4, 6],
+  orientations: {
+    0: [0, 1, 2, 0, 2, 1, 0],
+    1: [0, 2, 1, 0, 1, 2, 0],
+    2: [0, 0, 0, 0, 0, 0, 0],
+    3: [0, 0, 0, 0, 0, 0, 0],
+  }
+}
+
+let U = {
+  perm: [3, 0, 1, 2, 4, 5, 6],
+  orientations: {
+    0: [0, 0, 0, 0, 0, 0, 0],
+    1: [2, 1, 2, 1, 0, 0, 0],
+    2: [1, 2, 1, 2, 0, 0, 0],
+    3: [0, 0, 0, 0, 0, 0, 0],
+  }
+}
+
+function createOrieForType(pieces, type) {
+  return new FlexibleOrie({
+    pieceTypeOrders: {
+      '0': 3,
+      '1': 3,
+      '2': 3,
+      '3': 1,
+    },
+    pieceArrangement: pieces.map(p => p.orientationType === type ? p.orientationType : 3),
+    moveEffects: {
+      "F": F,
+      "F2": "F F",
+      "F'": "F F F",
+      "R": R,
+      "R2": "R R",
+      "R'": "R R R",
+      "U": U,
+      "U2": "U U",
+      "U'": "U U U",
+    }
+  });
+}
+
 var applyMove = function(cube, move) {
   if (!moveEffects.hasOwnProperty(move)) {
     throw new Error("Unknown move '" + move + "'");
@@ -119,11 +176,15 @@ class Two {
   }
 
   normalizedStickers() {
-    var b = this._state[20];
+    // here, we assume that no rotations were done
+    // var b = this._state[20];
+    var b = 5;
     var f = opposites[b];
-    var d = this._state[18];
+    // var d = this._state[18];
+    var d = 4;
     var u = opposites[d];
-    var l = this._state[10];
+    // var l = this._state[10];
+    var l = 1;
     var r = opposites[l];
     var mapping = {
       [f]: 2, [b]: 5,
@@ -147,6 +208,41 @@ class Two {
     var id = [];
     for (var i = 0; i < len; i++) { id.push(i); }
     return id.map(corner => classifyCorner(corner, this.normalizedStickers()));
+  }
+
+  solPuzzle() {
+    let pieces = this.pieces();
+    let perm = new FlexiblePerm({
+      pieces: pieces.map(p => p.which),
+      moveEffects: {
+        "F": [0, 1, 3, 6, 4, 2, 5],
+        "F2": "F F",
+        "F'": "F F F",
+        "R": [0, 2, 5, 3, 1, 4, 6],
+        "R2": "R R",
+        "R'": "R R R",
+        "U": [3, 0, 1, 2, 4, 5, 6],
+        "U2": "U U",
+        "U'": "U U U"
+      }
+    });
+
+    let orieUD = createOrieForType(pieces, 0);
+    let orieFB = createOrieForType(pieces, 1);
+    let orieLR = createOrieForType(pieces, 2);
+    return new Puz({
+      components: {
+        perm: perm,
+        orieUD: orieUD,
+        orieFB: orieFB,
+        orieLR: orieLR,
+      },
+      axes: [
+        ["F", "F2", "F'"],
+        ["R", "R2", "R'"],
+        ["U", "U2", "U'"]
+      ],
+    })
   }
 }
 

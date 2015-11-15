@@ -23,6 +23,7 @@ var colours = [
 let UD = 0;
 let FB = 1;
 let LR = 2;
+let ALL = 3;
 
 var isUOrD = x => x === 0 || x === 4;
 
@@ -195,7 +196,8 @@ var classifyCorner = function(corner, state) {
     return {
       type: COMPLETE_PIECE,
       which: [index],
-      orientation: getOrie(normalized)
+      orientation: getOrie(normalized),
+      orientationType: UD
     };
   } else if (stickerCount === 1) {
     let sticker;
@@ -217,9 +219,17 @@ var classifyCorner = function(corner, state) {
     return {
       type: PARTIALLY_DEFINED,
       sticker: sticker,
+      orientationType,
       orientation: (stickerPosn - orientationIndex + 3) % 3,
       which: positionsForSingleStickers[sticker],
     };
+  } else if (stickerCount === 0) {
+    return {
+      type: PARTIALLY_DEFINED,
+      orientationType: ALL,
+      orientation: 0,
+      which: [0, 1, 2, 3, 4, 5, 6]
+    }
   }
 };
 
