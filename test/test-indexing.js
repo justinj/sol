@@ -56,6 +56,8 @@ describe("permutations with repititions", function() {
     claim.same(repeatedPermToIndex([0, 1, 1]), 0);
     claim.same(repeatedPermToIndex([1, 0, 1]), 1);
     claim.same(repeatedPermToIndex([1, 1, 0]), 2);
+
+    claim.same(repeatedPermToIndex([0, 1, 2, 3, 4, 5, 6]), 0);
   });
 
   it("maps permutations distinctly", function() {
