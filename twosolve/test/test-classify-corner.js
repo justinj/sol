@@ -36,6 +36,12 @@ describe('classifyCorner', function() {
     });
   });
 
+  describe.skip('pieces with 2 stickers defined', function() {
+    it('isn\'t tested yet!', function() {
+      assert.fail();
+    });
+  });
+
   describe('partially defined pieces', function() {
     let state = [
               0,  3,
