@@ -1,4 +1,5 @@
 import { COMPLETE_PIECE, PARTIALLY_DEFINED } from './piece-types';
+import { UD, FB, LR, ALL } from './orientation-types';
 // TODO: would be sweet to generalize a bunch of the stuff that got ripped from cubid
 var solved = [
            0,  1,
@@ -20,22 +21,19 @@ var colours = [
            5,  5,
            5,  5];
 
-let UD = 0;
-let FB = 1;
-let LR = 2;
-let ALL = 3;
-
 var isUOrD = x => x === 0 || x === 4;
 
-var CORNERS = {
-  0: [0, 22, 4],
-  1: [1, 9, 23],
-  2: [3, 7, 8],
-  3: [2, 5, 6],
-  4: [19, 21, 15],
-  5: [17, 14, 13],
-  6: [16, 12, 11]
-};
+var UBL = [0, 22, 4];
+var URB = [1, 9, 23];
+var UFR = [3, 7, 8];
+var ULF = [2, 5, 6];
+var DBR = [19, 21, 15];
+var DRF = [17, 14, 13];
+var DFL = [16, 12, 11];
+
+var CORNERS = [UBL, URB, UFR, ULF, DBR, DRF, DFL];
+
+var UNDEFINED_STICKER = 6;
 
 var getOrie = function(corner) {
   if (isUOrD(corner[0])) return 0;
@@ -55,8 +53,6 @@ var canonicalizeCorner = function(corner) {
   }
 };
 
-var len = 7;
-
 var arrayEqual = function(a, b) {
   if (a.length !== b.length) return false;
   for (var i = 0; i < a.length; i++) {
@@ -67,7 +63,7 @@ var arrayEqual = function(a, b) {
 
 var partiallyDefined = function(corner) {
   for (var i = 0; i < corner.length; i++) {
-    if (corner[i] === 6) {
+    if (corner[i] === UNDEFINED_STICKER) {
       return true;
     }
   }
@@ -160,7 +156,7 @@ var fillInCorner = function(normalized) {
 
 var numberOfStickers = function(piece) {
   let count = 0;
-  piece.forEach(sticker => count += sticker === 6 ? 0 : 1);
+  piece.forEach(sticker => count += sticker === UNDEFINED_STICKER ? 0 : 1);
   return count;
 }
 
