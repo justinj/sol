@@ -1,5 +1,6 @@
 import claim from 'claim';
 import FlexibleOrie from '../lib/flexible-orie';
+import { MAX_DEPTH } from '../lib/constants';
 
 import Puzzle from '../lib/puz';
 import solve from '../lib/solve';
@@ -82,7 +83,7 @@ describe('FlexibleOrie', function() {
   it('generates a pruning table', function() {
     claim.same(
       fo.getPruningTables(),
-      [{ 0: 0, 1: 0, 3: 1, 5: 2, 6: 1, 12: 1}]
+      [[0, 0, MAX_DEPTH, 1, MAX_DEPTH, 2, 1, MAX_DEPTH, MAX_DEPTH, MAX_DEPTH, MAX_DEPTH, MAX_DEPTH, 1]]
     );
   });
 
